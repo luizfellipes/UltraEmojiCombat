@@ -1,31 +1,31 @@
 package org.example;
 
 public class Luta {
-    private String desafiado;
-    private String desafiando;
+    private Lutador desafiado;
+    private Lutador desafiando;
     private int rounds;
-    private String aprovada;
+    private Boolean aprovada;
 
-    public Luta(String desafiado, String desafiando, int rounds, String aprovada) {
+    public Luta() {
         this.desafiado = desafiado;
         this.desafiando = desafiando;
         this.rounds = rounds;
         this.aprovada = aprovada;
     }
 
-    public String getDesafiado() {
+    public Lutador getDesafiado() {
         return desafiado;
     }
 
-    public void setDesafiado(String desafiado) {
+    public void setDesafiado(Lutador desafiado) {
         this.desafiado = desafiado;
     }
 
-    public String getDesafiando() {
+    public Lutador getDesafiando() {
         return desafiando;
     }
 
-    public void setDesafiando(String desafiando) {
+    public void setDesafiando(Lutador desafiando) {
         this.desafiando = desafiando;
     }
 
@@ -37,19 +37,53 @@ public class Luta {
         this.rounds = rounds;
     }
 
-    public String getAprovada() {
+    public Boolean getAprovada() {
         return aprovada;
     }
 
-    public void setAprovada(String aprovada) {
+    public void setAprovada(Boolean aprovada) {
         this.aprovada = aprovada;
     }
 
-    public void marcarLuta() {
+    public void marcarLuta(Lutador l1, Lutador l2) {
+        if (l1.getCategoria() == l2.getCategoria() && l1 != l2) {
+            this.aprovada = true;
+            this.desafiado = l1;
+            this.desafiando = l2;
+        } else {
+            this.aprovada = false;
+            this.desafiado = null;
+            this.desafiando = null;
+        }
 
     }
 
-    public void lutar(){
-
+    public void lutar() {
+        if (this.aprovada) {
+            this.desafiado.apresentar();
+            this.desafiando.apresentar();
+            int vencedor = (int) (Math.random() * 3);
+            switch (vencedor) {
+                case 0 -> {
+                    System.out.println("Empate !");
+                    this.desafiado.empatarLuta();
+                    this.desafiando.empatarLuta();
+                }
+                case 1 -> {
+                    System.out.println("desafiado ganhou a luta");
+                    this.desafiado.ganharLuta();
+                    this.desafiando.perderLuta();
+                }
+                case 2 -> {
+                    System.out.println("desafiando ganhou a luta !");
+                    this.desafiado.perderLuta();
+                    this.desafiando.ganharLuta();
+                }
+            }
+        } else {
+            System.out.println("Luta não pode acontecer");
+        }
     }
+
+
 }
